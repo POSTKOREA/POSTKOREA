@@ -14,5 +14,7 @@ class MainFragment : BaseFragment<FragmentMainBinding> (FragmentMainBinding::bin
 
     private lateinit var viewModel: MainViewModel
 
+    //amend test
+
 
 }
