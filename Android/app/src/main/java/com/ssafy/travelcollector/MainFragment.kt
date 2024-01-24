@@ -1,20 +1,31 @@
 package com.ssafy.travelcollector
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import com.ssafy.travelcollector.adapter.main.MainPostingAdapter
 import com.ssafy.travelcollector.config.BaseFragment
 import com.ssafy.travelcollector.databinding.FragmentMainBinding
+import com.ssafy.travelcollector.viewModel.MainActivityViewModel
 
 class MainFragment : BaseFragment<FragmentMainBinding> (FragmentMainBinding::bind, R.layout.fragment_main){
 
+    private val mainActivityViewModel = MainActivityViewModel()
 
-    private lateinit var viewModel: MainViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    //amend test
+        binding.mainPostRv.adapter = MainPostingAdapter().apply {
+            clickListener = object : MainPostingAdapter.IClickListener{
+                override fun onClick(position: Int) {
+                    val curId = mainActivityViewModel.posting.value[position].postId
+                    mainActivityViewModel.setSelectedPostingId(curId)
+                }
+            }
+        }
+
+    }
+
+
 
 
 }
