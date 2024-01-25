@@ -41,7 +41,7 @@
 
         <EditText
             android:id="@+id/travel_plan_et_name"
-            android:background="@drawable/edittext_inner_shadow"
+            android:background="@drawable/edittext_drop_shadow_brown1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
@@ -58,7 +58,7 @@
         android:layout_marginHorizontal="20dp"
         android:paddingVertical="10dp"
         android:paddingLeft="15dp"
-        android:background="@drawable/edittext_inner_shadow"
+        android:background="@drawable/edittext_drop_shadow_brown1"
         >
 
         <ImageView

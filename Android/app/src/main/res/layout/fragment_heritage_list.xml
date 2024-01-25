@@ -17,7 +17,7 @@
         app:iconifiedByDefault="false"
         android:background="@drawable/rounded_rectangle_white"
         app:queryHint="검색어를 입력하세요"
-        app:queryBackground="null"
+        app:queryBackground="@color/white"
         android:padding="5dp"
         />
 
