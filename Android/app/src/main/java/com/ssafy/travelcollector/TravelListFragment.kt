@@ -1,11 +1,18 @@
 package com.ssafy.travelcollector
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.navigation.Navigation
+import com.ssafy.travelcollector.config.BaseFragment
+import com.ssafy.travelcollector.databinding.FragmentTravelListBinding
 
-class TravelListFragment : Fragment() {
+class TravelListFragment : BaseFragment<FragmentTravelListBinding> (FragmentTravelListBinding::bind, R.layout.fragment_travel_list ){
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.travelListAddBtnMyTravel.setOnClickListener{
+            Navigation.findNavController(view).navigate(R.id.travelPlanFragment)
+        }
+    }
 
 }

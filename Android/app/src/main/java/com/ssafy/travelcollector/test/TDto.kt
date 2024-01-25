@@ -1,4 +1,4 @@
-package com.ssafy.travelcollector
+package com.ssafy.travelcollector.test
 
 data class TDto(
     var a : Int = 1
