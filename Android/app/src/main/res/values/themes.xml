@@ -6,4 +6,12 @@
     </style>
 
     <style name="Theme.TravelCollector" parent="Base.Theme.TravelCollector" />
+
+
+
+    <style name="BottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="android:background">@color/brown4</item>
+    </style>
+
+
 </resources>
