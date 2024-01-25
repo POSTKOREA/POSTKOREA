@@ -57,9 +57,10 @@
         android:id="@+id/login_btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="로그인"
-        android:background="#A9927D"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_login"
         android:layout_marginBottom="20dp"
+        android:paddingHorizontal="50dp"
         />
 
     <LinearLayout
