@@ -1,9 +1,10 @@
-package com.ssafy.travelcollector
+package com.ssafy.travelcollector.test
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.ssafy.travelcollector.config.BaseAdapter
 import com.ssafy.travelcollector.databinding.TestBinding
+import com.ssafy.travelcollector.test.TDto
 
 class TestAdapter: BaseAdapter<TDto>() {
 
