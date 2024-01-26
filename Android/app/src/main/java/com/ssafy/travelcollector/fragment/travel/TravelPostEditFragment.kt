@@ -1,4 +1,4 @@
-package com.ssafy.travelcollector
+package com.ssafy.travelcollector.fragment.travel
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

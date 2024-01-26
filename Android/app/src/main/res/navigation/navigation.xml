@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/travelListFragment"
-        android:name="com.ssafy.travelcollector.TravelListFragment"
+        android:name="com.ssafy.travelcollector.fragment.travel.TravelListFragment"
         android:label="fragment_travel_list"
         tools:layout="@layout/fragment_travel_list" >
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/travelPlanFragment"
-        android:name="com.ssafy.travelcollector.TravelPlanFragment"
+        android:name="com.ssafy.travelcollector.fragment.travel.TravelPlanFragment"
         android:label="fragment_travel_plan"
         tools:layout="@layout/fragment_travel_plan" />
 </navigation>

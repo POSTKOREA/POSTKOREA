@@ -1,20 +1,19 @@
-package com.ssafy.travelcollector
+package com.ssafy.travelcollector.fragment.travel
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
 import com.ssafy.travelcollector.config.BaseFragment
 import com.ssafy.travelcollector.databinding.FragmentTravelPlanBinding
-import java.util.Calendar
-import androidx.core.util.Pair
+import com.ssafy.travelcollector.R
 import java.text.SimpleDateFormat
 import java.util.Calendar.getInstance
 import java.util.Locale
 
 
-class TravelPlanFragment : BaseFragment<FragmentTravelPlanBinding>(FragmentTravelPlanBinding::bind, R.layout.fragment_travel_plan) {
+class TravelPlanFragment : BaseFragment<FragmentTravelPlanBinding>(FragmentTravelPlanBinding::bind,
+    R.layout.fragment_travel_plan
+) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
