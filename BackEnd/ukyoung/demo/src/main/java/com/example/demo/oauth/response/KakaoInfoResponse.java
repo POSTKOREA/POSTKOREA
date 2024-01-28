@@ -1,6 +1,6 @@
 package com.example.demo.oauth.response;
 
-import com.example.demo.oauth.OAuthProvider;
+import com.example.demo.oauth.OAuthInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -43,12 +43,8 @@ public class KakaoInfoResponse implements OAuthInfoResponse {
         return kakaoAccount.profile.profile_image_url;
     }
 
-    public String getProfileImageUrl() {
-        return kakaoAccount.profile.profile_image_url;
-    }
-
     @Override
-    public OAuthProvider getOAuthProvider() {
-        return OAuthProvider.KAKAO;
+    public OAuthInfo getOAuthInfo() {
+        return OAuthInfo.KAKAO;
     }
 }

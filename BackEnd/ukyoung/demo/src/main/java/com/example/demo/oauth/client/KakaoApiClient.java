@@ -1,6 +1,6 @@
 package com.example.demo.oauth.client;
 
-import com.example.demo.oauth.OAuthProvider;
+import com.example.demo.oauth.OAuthInfo;
 import com.example.demo.oauth.params.OAuthLoginParams;
 import com.example.demo.oauth.response.KakaoInfoResponse;
 import com.example.demo.oauth.response.OAuthInfoResponse;
@@ -35,8 +35,8 @@ public class KakaoApiClient implements OAuthApiClient {
     private final RestTemplate restTemplate;
 
     @Override
-    public OAuthProvider oAuthProvider() {
-        return OAuthProvider.KAKAO;
+    public OAuthInfo oAuthInfo() {
+        return OAuthInfo.KAKAO;
     }
 
     // 토큰 갱신하기

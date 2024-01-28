@@ -1,6 +1,5 @@
 package com.example.demo.oauth;
 
-import com.example.demo.oauth.OAuthProvider;
 import com.example.demo.oauth.client.OAuthApiClient;
 import com.example.demo.oauth.params.OAuthLoginParams;
 import com.example.demo.oauth.response.OAuthInfoResponse;
@@ -14,17 +13,17 @@ import java.util.stream.Collectors;
 @Component
 public class RequestOAuthInfoService {
 
-    private final Map<OAuthProvider, OAuthApiClient> clients;
+    private final Map<OAuthInfo, OAuthApiClient> clients;
 
     public RequestOAuthInfoService(List<OAuthApiClient> clients) {
         this.clients = clients.stream().collect(
-                Collectors.toUnmodifiableMap(OAuthApiClient::oAuthProvider, Function.identity())
+                Collectors.toUnmodifiableMap(OAuthApiClient::oAuthInfo, Function.identity())
         );
     }
 
     public OAuthInfoResponse request(OAuthLoginParams params) {
         // API 제공자 식별
-        OAuthApiClient client = clients.get(params.oAuthProvider());
+        OAuthApiClient client = clients.get(params.oAuthInfo());
         String accessToken = client.requestAccessToken(params);
         return client.requestOAuthInfo(accessToken);
     }

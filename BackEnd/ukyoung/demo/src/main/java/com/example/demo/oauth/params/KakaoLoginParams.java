@@ -1,6 +1,6 @@
 package com.example.demo.oauth.params;
 
-import com.example.demo.oauth.OAuthProvider;
+import com.example.demo.oauth.OAuthInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.util.LinkedMultiValueMap;
@@ -13,8 +13,8 @@ public class KakaoLoginParams implements OAuthLoginParams {
     private String authorizationCode;
 
     @Override
-    public OAuthProvider oAuthProvider() {
-        return OAuthProvider.KAKAO;
+    public OAuthInfo oAuthInfo() {
+        return OAuthInfo.KAKAO;
     }
 
     @Override

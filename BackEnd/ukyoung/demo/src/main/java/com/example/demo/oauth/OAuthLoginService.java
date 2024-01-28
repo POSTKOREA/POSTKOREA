@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.oauth;
 
 import com.example.demo.entity.Member;
 import com.example.demo.oauth.RequestOAuthInfoService;
@@ -18,6 +18,8 @@ public class OAuthLoginService {
     private final AuthTokensGenerator authTokensGenerator;
     private final RequestOAuthInfoService requestOAuthInfoService;
 
+    // params 기준으로 login 실행
+
     public AuthTokens login(OAuthLoginParams params) {
         OAuthInfoResponse oAuthInfoResponse = requestOAuthInfoService.request(params);
         Long memberId = findOrCreateMember(oAuthInfoResponse);
@@ -30,11 +32,13 @@ public class OAuthLoginService {
                 .orElseGet(() -> newMember(oAuthInfoResponse));
     }
 
+    //
     private Long newMember(OAuthInfoResponse oAuthInfoResponse) {
         Member member = Member.builder()
                 .email(oAuthInfoResponse.getEmail())
                 .nickname(oAuthInfoResponse.getNickname())
-                .oAuthProvider(oAuthInfoResponse.getOAuthProvider())
+                .profileImg(oAuthInfoResponse.getProfileImg())
+                .oAuthInfo(oAuthInfoResponse.getOAuthInfo())
                 .build();
         return memberRepository.save(member).getId();
     }

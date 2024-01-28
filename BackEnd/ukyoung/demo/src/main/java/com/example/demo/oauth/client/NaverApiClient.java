@@ -1,7 +1,6 @@
 package com.example.demo.oauth.client;
 
-import com.example.demo.controller.AuthController;
-import com.example.demo.oauth.OAuthProvider;
+import com.example.demo.oauth.OAuthInfo;
 import com.example.demo.oauth.params.OAuthLoginParams;
 import com.example.demo.oauth.response.NaverInfoResponse;
 import com.example.demo.oauth.response.OAuthInfoResponse;
@@ -42,8 +41,8 @@ public class NaverApiClient implements OAuthApiClient {
     private final RestTemplate restTemplate;
 
     @Override
-    public OAuthProvider oAuthProvider() {
-        return OAuthProvider.NAVER;
+    public OAuthInfo oAuthInfo() {
+        return OAuthInfo.NAVER;
     }
 
     // 네이버 로그인 API 명세
@@ -65,14 +64,7 @@ public class NaverApiClient implements OAuthApiClient {
         body.add("client_secret", clientSecret);
 
         HttpEntity<?> request = new HttpEntity<>(body, httpHeaders);
-        System.out.println("1. requestAccessToken");
-        System.out.println("  url: " + url);
-        System.out.println("  header : " + httpHeaders);
-        System.out.println("  body : " + body);
-
         NaverTokens response = restTemplate.postForObject(url, request, NaverTokens.class);
-
-        System.out.println(response);
 
         // 미리 정의해둔 NaverTokens 객체로 응답 결과 저장
         assert response != null;
@@ -93,11 +85,8 @@ public class NaverApiClient implements OAuthApiClient {
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
 
-        HttpEntity<?> request = new HttpEntity<>(body, httpHeaders);
         // 미리 정의해둔 NaverInfoResponse 객체로 응답 결과 저장
-        logger.debug("2. requestOAuthInfo");
-        logger.debug("  header : " + httpHeaders);
-        logger.debug("  body : " + body);
+        HttpEntity<?> request = new HttpEntity<>(body, httpHeaders);
 
         return restTemplate.postForObject(url, request, NaverInfoResponse.class);
     }

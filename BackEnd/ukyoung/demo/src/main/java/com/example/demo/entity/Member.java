@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import com.example.demo.oauth.OAuthProvider;
+import com.example.demo.oauth.OAuthInfo;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,7 +9,7 @@ import lombok.*;
 
 @Getter
 @Entity
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
@@ -18,6 +18,11 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
+    private String password;
+    private String name;
     private String nickname;
-    private OAuthProvider oAuthProvider;
+    private Integer age;
+    private String gender;
+    private String profileImg;
+    private OAuthInfo oAuthInfo;
 }
