@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     path('list/', views.save_list_data),
-    # path('detail/', views.relic_detail),
+    path('detail/', views.save_detail_data),
 ]
