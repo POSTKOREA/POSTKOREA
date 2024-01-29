@@ -10,6 +10,7 @@
     android:orientation="vertical"
     android:gravity="center">
 
+    <!--수정했음-->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -139,9 +140,5 @@
             android:hint="댓글달기"
             />
     </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
 
 </LinearLayout>
