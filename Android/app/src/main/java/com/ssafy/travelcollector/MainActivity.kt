@@ -1,7 +1,9 @@
 package com.ssafy.travelcollector
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import android.view.WindowManager
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -53,6 +55,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_action, menu)
         return true
+    }
+
+    fun setNavigationBarStatus(status: Boolean){
+        if(!status) {
+            binding.bottomNavigation.visibility = View.GONE
+        } else {
+            binding.bottomNavigation.visibility = View.VISIBLE
+        }
     }
 
 
