@@ -1,5 +1,6 @@
 package com.ssafy.travelcollector
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.ssafy.travelcollector.adapter.main.MainPostingAdapter
@@ -12,8 +13,16 @@ class MainFragment : BaseFragment<FragmentMainBinding> (FragmentMainBinding::bin
 
     private val mainActivityViewModel = MainActivityViewModel()
 
+    private lateinit var mainActivity: MainActivity
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mainActivity = context as MainActivity
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        mainActivity.setNavigationBarStatus(true)
 
         binding.mainPostRv.adapter = MainPostingAdapter().apply {
             submitList(listOf(Posting(), Posting(), Posting()))
