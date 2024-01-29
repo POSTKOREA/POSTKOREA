@@ -14,7 +14,11 @@ import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
 import com.ssafy.travelcollector.config.BaseFragment
+import com.ssafy.travelcollector.config.SNSAuth.disconnect
+import com.ssafy.travelcollector.config.SNSAuth.startKakaoLogin
+import com.ssafy.travelcollector.config.SNSAuth.startNaverLogin
 import com.ssafy.travelcollector.databinding.FragmentLoginBinding
+import kotlin.math.exp
 import kotlin.math.log
 
 
@@ -38,60 +42,19 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
         }
 
         binding.loginBtnNaverLogin.setOnClickListener{
-            showToast("clicked")
-            startNaverLogin()
+            startNaverLogin(requireContext(),view)
         }
 
+        binding.loginKakaoLogin.setOnClickListener{
+            startKakaoLogin(requireContext(), view)
+        }
+
+        binding.loginBtnFindId.setOnClickListener {
+            disconnect()
+        }
     }
 
-    private fun startNaverLogin(){
-        var token: String? = ""
-        val profileCallback = object: NidProfileCallback<NidProfileResponse>{
-            override fun onError(errorCode: Int, message: String) {
-                Log.d(TAG, "onError: $errorCode")
-                onFailure(errorCode, message)
-            }
 
-            override fun onFailure(httpStatus: Int, message: String) {
-                Log.d(TAG, "onFailure: $httpStatus")
-                val errorCode = NaverIdLoginSDK.getLastErrorCode().code
-                val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                showToast("errorCode: $errorCode \n errorDescription: $errorDescription")
-            }
-
-            override fun onSuccess(result: NidProfileResponse) {
-                val userId = result.profile?.id
-                showToast("성공 $userId")
-
-            }
-        }
-
-        val oauthLoginCallback = object: OAuthLoginCallback{
-            override fun onError(errorCode: Int, message: String) {
-                Log.d(TAG, "onError: $errorCode")
-                showToast("error $errorCode \n message $message")
-                onFailure(errorCode, message)
-            }
-
-            override fun onFailure(httpStatus: Int, message: String) {
-                Log.d(TAG, "onFailure: $httpStatus")
-                val errorCode = NaverIdLoginSDK.getLastErrorCode().code
-                val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                showToast("errorCode: $errorCode \n errorDescription: $errorDescription")
-            }
-
-            override fun onSuccess() {
-                token = NaverIdLoginSDK.getAccessToken()
-                Log.d(TAG, "onSuccess: $token")
-                showToast("token $token")
-                NidOAuthLogin().callProfileApi(profileCallback)
-            }
-
-        }
-
-        NaverIdLoginSDK.authenticate(requireContext(), oauthLoginCallback)
-
-    }
 
 
 }

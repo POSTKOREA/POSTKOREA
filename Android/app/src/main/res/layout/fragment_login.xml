@@ -139,6 +139,7 @@
         android:background="@drawable/naver_login"
         tools:ignore="SpeakableTextPresentCheck" />
 
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/login_kakao_login"
         android:layout_width="wrap_content"
