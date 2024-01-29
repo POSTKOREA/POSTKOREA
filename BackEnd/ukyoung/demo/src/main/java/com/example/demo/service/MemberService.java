@@ -6,8 +6,6 @@ import com.example.demo.entity.Member;
 import com.example.demo.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +48,7 @@ public class MemberService {
                 .gender(memberDto.getUserGender())
                 // 프로필 이미지의 경우 회원가입에서 입력 X, 기본값으로 입력 필요
                 .oAuthInfo(memberDto.getUserAuth())
+                .point(0)
                 .build();
         
         // 회원정보 JPA를 통해 DB에 저장
@@ -140,5 +139,15 @@ public class MemberService {
     @Transactional
     public void removeMember(Long id) {
         memberRepository.deleteById(id);
+    }
+
+    public Long getUserIdByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .map(Member::getId)
+                .orElseThrow(() -> new EntityNotFoundException("회원정보를 찾을 수 없습니다."));
+    }
+
+    public boolean existsById(Long id) {
+        return memberRepository.existsById(id);
     }
 }

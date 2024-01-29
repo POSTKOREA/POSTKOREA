@@ -24,6 +24,7 @@ public class Member {
     private Integer age;
     private String gender;
     private String profileImg;
+    private Integer point;
     private OAuthInfo oAuthInfo;
-    private Integer point = 0;
+
 }

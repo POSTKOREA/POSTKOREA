@@ -109,7 +109,7 @@ public class MemberController {
             response.put("code", 1);
             response.put("msg", e.getMessage());    // 사용자를 찾을 수 없습니다.
 
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response); // 401
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response); // 401
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("code", 2);

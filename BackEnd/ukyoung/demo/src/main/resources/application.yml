@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto:
+      # ddl-auto: create
     properties:
       hibernate:
         # show_sql: true
@@ -18,8 +18,12 @@ logging.level:
 # org.hibernate.type: trace
 
 jwt:
-  # OpenSSL? 128?? 16?? ?? ?? (64Bytes)
   secret-key: a3f62325a07a3194531c43a4fb97e85d8c635959ff92bf833bd86a98a5c2cbe02a3f082a5058712221c8e7cac9ad5143ed3f6d3bce64ef052b2df2bd95a0132c
+
+file:
+  upload-dir: C:\Users\SSAFY\Documents\uploads
+  download-dir: https://localhost:8080/user/profile/image
+  max-file-size: 5MB
 
 oauth:
   kakao:
