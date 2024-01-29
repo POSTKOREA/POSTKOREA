@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".SignUpFragment"
     android:orientation="vertical"
-    android:background="#F5EBE0"
+    android:background="@color/background"
     android:gravity="center"
     >
 
