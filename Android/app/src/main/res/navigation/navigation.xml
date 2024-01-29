@@ -44,5 +44,6 @@
         android:id="@+id/signUpFragment"
         android:name="com.ssafy.travelcollector.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_sign_up" >
+    </fragment>
 </navigation>

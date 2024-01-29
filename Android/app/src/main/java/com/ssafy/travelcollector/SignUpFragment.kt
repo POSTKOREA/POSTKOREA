@@ -1,59 +1,58 @@
 package com.ssafy.travelcollector
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.ssafy.travelcollector.config.BaseFragment
+import com.ssafy.travelcollector.databinding.FragmentSignUpBinding
+import com.ssafy.travelcollector.viewModel.MainActivityViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val TAG = "SignUpFragment"
+class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::bind, R.layout.fragment_sign_up) {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SignUpFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class SignUpFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private fun initView(){
+        val defaultInfo = mainActivityViewModel.getUserInfoToSignUp()
+
+        if(defaultInfo.userEmail.isNotEmpty()){
+            binding.signUpEtEMail.setText(defaultInfo.userEmail)
+            binding.signUpEtName.setText(defaultInfo.userNickname)
         }
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false)
-    }
+        binding.signUpBtnSignUp.setOnClickListener {
+            //db에 회원 정보 저장
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SignUpFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SignUpFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+            if(isValidInformation()){
+                findNavController().navigate(R.id.loginFragment)
+                showToast("회원가입 성공")
+            }else{
+                showToast("정보가 잘못됨")
             }
+        }
+
     }
+
+    private fun isValidInformation(): Boolean {
+        return (binding.signUpEtEMail.text!!.isNotEmpty()
+                && binding.signUpEtPw.text!!.isNotEmpty()
+                && (binding.signUpEtPw2.text.toString() == binding.signUpEtPw.text!!.toString())
+                && binding.signUpEtName.text!!.isNotEmpty()
+                && binding.signUpEtPhoneNumber.text!!.isNotEmpty())
+    }
+
+
+
 }

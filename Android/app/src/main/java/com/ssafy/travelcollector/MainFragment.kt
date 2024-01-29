@@ -11,14 +11,6 @@ import com.ssafy.travelcollector.viewModel.MainActivityViewModel
 
 class MainFragment : BaseFragment<FragmentMainBinding> (FragmentMainBinding::bind, R.layout.fragment_main){
 
-    private val mainActivityViewModel = MainActivityViewModel()
-
-    private lateinit var mainActivity: MainActivity
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mainActivity = context as MainActivity
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
