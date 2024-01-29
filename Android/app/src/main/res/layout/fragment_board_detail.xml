@@ -69,7 +69,7 @@
         android:background="@drawable/edittext_drop_shadow_brown2">
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/board_detail_vp2"
+            android:id="@+id/board_detail_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -84,7 +84,7 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:paddingBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="@id/board_detail_vp2"
+            app:layout_constraintBottom_toBottomOf="@id/board_detail_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -100,6 +100,7 @@
         />
 
     <TextView
+        android:id="@+id/board_detail_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
@@ -107,7 +108,7 @@
         android:layout_marginHorizontal="20dp"
         android:textSize="20sp"
         android:background="@drawable/edittext_drop_shadow_brown2"
-        android:text="내용"/>
+        tools:text="내용"/>
 
 
     <View
