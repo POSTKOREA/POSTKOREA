@@ -35,9 +35,6 @@ public class NaverApiClient implements OAuthApiClient {
     @Value("${oauth.naver.client-id}")
     private String clientId;
 
-    @Value("${oauth.naver.secret}")
-    private String clientSecret;
-
     private final RestTemplate restTemplate;
 
     @Override
@@ -61,7 +58,6 @@ public class NaverApiClient implements OAuthApiClient {
         body.add("grant_type", "authorization_code");
         // code, state 는 params 에서 미리 정의해둠
         body.add("client_id", clientId);
-        body.add("client_secret", clientSecret);
 
         HttpEntity<?> request = new HttpEntity<>(body, httpHeaders);
         NaverTokens response = restTemplate.postForObject(url, request, NaverTokens.class);
