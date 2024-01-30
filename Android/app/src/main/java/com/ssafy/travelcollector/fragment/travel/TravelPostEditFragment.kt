@@ -34,10 +34,6 @@ import com.ssafy.travelcollector.test.TestAdapter
 private const val TAG = "TravelPostEditFragment"
 class TravelPostEditFragment : BaseFragment<FragmentTravelPostEditBinding>(FragmentTravelPostEditBinding::bind, R.layout.fragment_travel_post_edit) {
 
-    private lateinit var imageView: ImageView
-    private lateinit var button: Button
-    private var imageUri: Uri? = null
-
     private val imageAdapter: ImageSliderAdapter by lazy{
         ImageSliderAdapter()
     }
