@@ -30,7 +30,7 @@
         android:id="@+id/third_img"
         android:layout_width="68dp"
         android:layout_height="68dp"
-        android:layout_marginLeft="-51dp"
+        android:layout_marginLeft="-52dp"
         android:src="@color/material_dynamic_tertiary95"
         app:civ_border_width="1dp"
         tools:src="@color/material_dynamic_tertiary95" />
