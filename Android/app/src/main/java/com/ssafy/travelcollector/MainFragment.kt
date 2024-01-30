@@ -3,6 +3,7 @@ package com.ssafy.travelcollector
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.ssafy.travelcollector.adapter.main.MainPostingAdapter
 import com.ssafy.travelcollector.config.BaseFragment
 import com.ssafy.travelcollector.databinding.FragmentMainBinding
@@ -20,8 +21,9 @@ class MainFragment : BaseFragment<FragmentMainBinding> (FragmentMainBinding::bin
             submitList(listOf(Posting(), Posting(), Posting()))
             clickListener = object : MainPostingAdapter.IClickListener{
                 override fun onClick(position: Int) {
-                    val curId = mainActivityViewModel.posting.value[position].postId
-                    mainActivityViewModel.setSelectedPostingId(curId)
+//                    val curId = mainActivityViewModel.posting.value[position].postId
+//                    mainActivityViewModel.setSelectedPostingId(curId)
+                    findNavController().navigate(R.id.travelPostEditFragment)
                 }
             }
         }

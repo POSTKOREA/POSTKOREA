@@ -1,4 +1,4 @@
-package com.ssafy.travelcollector.adapter.main
+package com.ssafy.travelcollector.adapter.travel
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
