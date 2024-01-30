@@ -1,21 +1,32 @@
 package com.ssafy.travelcollector.viewModel
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.collection.ArraySet
+import androidx.collection.arraySetOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.ssafy.travelcollector.dto.Heritage
 import com.ssafy.travelcollector.dto.Posting
 import com.ssafy.travelcollector.dto.User
-import kotlinx.coroutines.Dispatchers
+import com.ssafy.travelcollector.test.TDto
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 private const val TAG = "MainActivityViewModel"
+
+enum class DetailStateEnum(private val state: Int) {
+    None(0),
+    AddToTravel(1),
+    MiniGame(2),
+}
+
 class MainActivityViewModel : ViewModel() {
+
+
+    private var detailState = arraySetOf(DetailStateEnum.None)
+    fun addDetailState(state: DetailStateEnum): MainActivityViewModel{
+        detailState.add(state)
+        return this
+    }
 
     private val _selectedPostingId = MutableStateFlow(0)
     val selectedPostingId = _selectedPostingId.asStateFlow()
@@ -27,9 +38,7 @@ class MainActivityViewModel : ViewModel() {
     val posting = _posting.asStateFlow()
 
 
-
-
-    private var _userInfoToSignUp = MutableStateFlow(User())
+    private val _userInfoToSignUp = MutableStateFlow(User())
     private val userInfoToSignUP = _userInfoToSignUp.asStateFlow()
     fun passUserInfoToSignUp(user:User){
         _userInfoToSignUp.update{user}
@@ -37,6 +46,16 @@ class MainActivityViewModel : ViewModel() {
     }
     fun getUserInfoToSignUp(): User{
         return  userInfoToSignUP.value
+    }
+
+    private var _travelPlanHeritageList = MutableStateFlow(arrayListOf(TDto(1), TDto(2), TDto(3)))
+    val travelPlanHeritageList = _travelPlanHeritageList.asStateFlow()
+    fun getTravelPlanHeritageList(){
+        //rest 통신 하여 각 여행의 문화재 리스트를 불러온다
+    }
+
+    fun setTravelPlanHeritageList(list: ArrayList<TDto>){
+        _travelPlanHeritageList.update { list }
     }
 
 }
