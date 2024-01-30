@@ -1,9 +1,8 @@
-package com.example.demo.controller.dto;
+package com.example.demo.member.entity.dto;
 
-import com.example.demo.oauth.OAuthInfo;
+import com.example.demo.oauth.service.OAuthInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 
 @Getter
