@@ -1,10 +1,10 @@
-package com.example.demo.oauth.client;
+package com.example.demo.oauth.service.client;
 
-import com.example.demo.oauth.OAuthInfo;
-import com.example.demo.oauth.params.OAuthLoginParams;
-import com.example.demo.oauth.response.NaverInfoResponse;
-import com.example.demo.oauth.response.OAuthInfoResponse;
-import com.example.demo.oauth.token.NaverTokens;
+import com.example.demo.oauth.service.OAuthInfo;
+import com.example.demo.oauth.service.params.OAuthLoginParams;
+import com.example.demo.oauth.service.response.NaverInfoResponse;
+import com.example.demo.oauth.service.response.OAuthInfoResponse;
+import com.example.demo.oauth.service.token.NaverTokens;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

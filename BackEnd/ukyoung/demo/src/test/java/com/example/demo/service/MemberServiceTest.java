@@ -1,10 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.controller.dto.MemberDto;
-import com.example.demo.oauth.OAuthInfo;
+import com.example.demo.member.entity.dto.MemberDto;
+import com.example.demo.oauth.service.OAuthInfo;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MemberServiceTest {
 

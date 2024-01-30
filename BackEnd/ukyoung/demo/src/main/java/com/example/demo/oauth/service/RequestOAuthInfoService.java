@@ -1,8 +1,8 @@
-package com.example.demo.oauth;
+package com.example.demo.oauth.service;
 
-import com.example.demo.oauth.client.OAuthApiClient;
-import com.example.demo.oauth.params.OAuthLoginParams;
-import com.example.demo.oauth.response.OAuthInfoResponse;
+import com.example.demo.oauth.service.client.OAuthApiClient;
+import com.example.demo.oauth.service.params.OAuthLoginParams;
+import com.example.demo.oauth.service.response.OAuthInfoResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

@@ -1,6 +1,6 @@
-package com.example.demo.oauth.response;
+package com.example.demo.oauth.service.response;
 
-import com.example.demo.oauth.OAuthInfo;
+import com.example.demo.oauth.service.OAuthInfo;
 
 public interface OAuthInfoResponse {
     String getEmail();

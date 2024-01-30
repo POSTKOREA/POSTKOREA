@@ -1,4 +1,4 @@
-package com.example.demo.oauth.token;
+package com.example.demo.oauth.service.token;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

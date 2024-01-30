@@ -1,6 +1,6 @@
-package com.example.demo.oauth.params;
+package com.example.demo.oauth.service.params;
 
-import com.example.demo.oauth.OAuthInfo;
+import com.example.demo.oauth.service.OAuthInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.util.LinkedMultiValueMap;

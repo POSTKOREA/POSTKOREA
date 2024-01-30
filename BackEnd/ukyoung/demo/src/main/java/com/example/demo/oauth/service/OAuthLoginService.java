@@ -1,10 +1,9 @@
-package com.example.demo.oauth;
+package com.example.demo.oauth.service;
 
-import com.example.demo.entity.Member;
-import com.example.demo.oauth.RequestOAuthInfoService;
-import com.example.demo.oauth.params.OAuthLoginParams;
-import com.example.demo.oauth.response.OAuthInfoResponse;
-import com.example.demo.repository.MemberRepository;
+import com.example.demo.member.entity.Member;
+import com.example.demo.oauth.service.params.OAuthLoginParams;
+import com.example.demo.oauth.service.response.OAuthInfoResponse;
+import com.example.demo.member.repository.MemberRepository;
 import com.example.demo.utils.AuthTokens;
 import com.example.demo.utils.AuthTokensGenerator;
 import lombok.RequiredArgsConstructor;

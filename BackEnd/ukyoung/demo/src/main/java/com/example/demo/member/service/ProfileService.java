@@ -1,7 +1,8 @@
-package com.example.demo.service;
+package com.example.demo.member.service;
 
-import com.example.demo.entity.Member;
-import com.example.demo.repository.MemberRepository;
+import com.example.demo.exception.CustomException;
+import com.example.demo.exception.ExceptionType;
+import com.example.demo.member.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +14,6 @@ import org.springframework.util.unit.DataSize;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -21,7 +21,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.SignatureException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,17 +35,17 @@ public class ProfileService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public String uploadProfileImage(Long id, MultipartFile file) throws SignatureException, IOException {
+    public String uploadProfileImage(Long id, MultipartFile file) throws IOException {
 
         // 잘못된 토큰을 입력받은 경우
         if (!memberRepository.existsById(id)) {
-            throw new EntityNotFoundException("사용자를 찾을 수 없습니다.");
+            throw new CustomException(ExceptionType.MEMBER_NOT_FOUND_EXCEPTION);
         }
         
         // 파일의 용량이 5MB를 초과하는 경우
         long parsedMaxFileSize = DataSize.parse(maxFileSize).toBytes();
         if (file.getSize() > parsedMaxFileSize) {
-            throw new MaxUploadSizeExceededException(parsedMaxFileSize);
+            throw new CustomException(ExceptionType.MAX_FILE_SIZE_EXCEPTION);
         }
 
         // 저장 시 중복 방지를 위해 사용자 아이디로 파일명 수정
@@ -64,7 +63,7 @@ public class ProfileService {
 
         // 잘못된 토큰을 입력받은 경우
         if (!memberRepository.existsById(id)) {
-            throw new EntityNotFoundException("사용자를 찾을 수 없습니다.");
+            throw new CustomException(ExceptionType.MEMBER_NOT_FOUND_EXCEPTION);
         }
 
         String fileName = id + ".PNG";
@@ -72,7 +71,7 @@ public class ProfileService {
         Resource resource = new UrlResource(filePath.toUri());
 
         if (!resource.exists()) {
-            throw new EntityNotFoundException("파일을 찾을 수 없습니다.");
+            throw new CustomException(ExceptionType.FILE_NOT_FOUND_EXCEPTION);
         }
 
         return resource;

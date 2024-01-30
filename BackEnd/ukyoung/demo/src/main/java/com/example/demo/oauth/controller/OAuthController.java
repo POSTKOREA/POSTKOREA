@@ -1,8 +1,8 @@
-package com.example.demo.controller;
+package com.example.demo.oauth.controller;
 
-import com.example.demo.oauth.params.KakaoLoginParams;
-import com.example.demo.oauth.params.NaverLoginParams;
-import com.example.demo.oauth.OAuthLoginService;
+import com.example.demo.oauth.service.params.KakaoLoginParams;
+import com.example.demo.oauth.service.params.NaverLoginParams;
+import com.example.demo.oauth.service.OAuthLoginService;
 import com.example.demo.utils.AuthTokens;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
