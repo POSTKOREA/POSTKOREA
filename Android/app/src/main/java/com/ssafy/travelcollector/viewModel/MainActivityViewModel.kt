@@ -67,7 +67,12 @@ class MainActivityViewModel : ViewModel() {
     ))
     val recommendedTheme = _recommendedTheme.asStateFlow()
     fun setRecommendedTheme(list: ArrayList<TravelTheme>){
-        _recommendedTheme.update { list }
+        _recommendedTheme.update{ ArrayList(list) }
+        saveRecommendedTheme()
+    }
+
+    private fun saveRecommendedTheme(){
+        //rest 통신을 하여 기존의 즐겨찾기 테마 정보를 수정한다
     }
 
     fun loadRecommendedTheme(){

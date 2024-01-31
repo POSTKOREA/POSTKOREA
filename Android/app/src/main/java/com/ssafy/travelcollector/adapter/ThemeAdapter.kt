@@ -27,7 +27,6 @@ class ThemeAdapter : BaseAdapter<TravelTheme>() {
                 clickListener.onBookMarkClick(layoutPosition)
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseHolder {
