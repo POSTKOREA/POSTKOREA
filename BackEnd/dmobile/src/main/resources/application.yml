@@ -1,8 +1,15 @@
+#server:
+#  port: 443
+#  ssl:
+#    enabled: true
+#    key-store: classpath:ssl/certificate.p12
+#    key-store-password: "0125"
+#    key-store-type: PKCS12
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3307/test
+    url: jdbc:mariadb://i10d102.p.ssafy.io:3306/test
     username: root
-    password: "0000"
+    password: "0125"
     driver-class-name: org.mariadb.jdbc.Driver
 
   jpa:

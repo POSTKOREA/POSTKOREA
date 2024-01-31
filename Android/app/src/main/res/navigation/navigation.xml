@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.ssafy.travelcollector.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_travelListFragment"
+            app:destination="@id/travelListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_travelPostEditFragment"
+            app:destination="@id/travelPostEditFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_heritagePostFragment"
+            app:destination="@id/heritagePostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/travelListFragment"
+        android:name="com.ssafy.travelcollector.fragment.travel.TravelListFragment"
+        android:label="fragment_travel_list"
+        tools:layout="@layout/fragment_travel_list" >
+        <action
+            android:id="@+id/action_travelListFragment_to_travelPlanFragment"
+            app:destination="@id/travelPlanFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/travelPlanFragment"
+        android:name="com.ssafy.travelcollector.fragment.travel.TravelPlanFragment"
+        android:label="fragment_travel_plan"
+        tools:layout="@layout/fragment_travel_plan" >
+        <action
+            android:id="@+id/action_travelPlanFragment_to_heritageListFragment"
+            app:destination="@id/heritageListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.ssafy.travelcollector.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment2"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.ssafy.travelcollector.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+    </fragment>
+    <fragment
+        android:id="@+id/heritageListFragment"
+        android:name="com.ssafy.travelcollector.HeritageListFragment"
+        android:label="fragment_heritage_list"
+        tools:layout="@layout/fragment_heritage_list" />
+    <fragment
+        android:id="@+id/travelPostEditFragment"
+        android:name="com.ssafy.travelcollector.fragment.travel.TravelPostEditFragment"
+        android:label="fragment_travel_post_edit"
+        tools:layout="@layout/fragment_travel_post_edit" />
+    <fragment
+        android:id="@+id/heritagePostFragment"
+        android:name="com.ssafy.travelcollector.HeritagePostFragment"
+        android:label="fragment_heritage_post"
+        tools:layout="@layout/fragment_heritage_post" />
+</navigation>

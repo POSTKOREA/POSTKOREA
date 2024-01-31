@@ -33,21 +33,21 @@ pipeline {
                 // sh './backend/gradlew build'
             }
         }
-        stage('Build Frontend') {
-            agent any
-            steps {
-                dir('frontend') {
-                    script {
-                        sh 'docker build -t front-image:latest -f Dockerfile .'
-                    }
-                }
-            }
-        }
+//         stage('Build Frontend') {
+//             agent any
+//             steps {
+//                 dir('Android') {
+//                     script {
+//                         sh 'docker build -t front-image:latest -f Dockerfile .'
+//                     }
+//                 }
+//             }
+//         }
 
         stage('Build Backend') {
             agent any
             steps {
-                dir('backend') {
+                dir('BackEnd/dmobile') {
                     script {
                         sh 'chmod +x ./gradlew'
                         sh './gradlew clean build'
@@ -63,27 +63,25 @@ pipeline {
 
                 // 현재 동작중인 컨테이너 중 front-image의 이
                 // 컨테이너를 stop 한다
-                sh 'docker ps -f name=front-image -q \
-                | xargs --no-run-if-empty docker container stop'
+//                 sh 'docker ps -f name=front-image -q \
+//                 | xargs --no-run-if-empty docker container stop'
+                // front-image의 이름을 가진 컨테이너를 삭제함
+//                 try {
+//                     sh 'docker container ls -a -f name=front-image \
+//                     | xargs -r docker container rm'
+//                 } catch (Exception e) {
+//                     // 에러를 무시하고 계속 진행
+//                     echo "Failed to remove Docker container: ${e.message}"
+//                 }
 
                 // 현재 동작중인 컨테이너 중 back-image의 이
                 // 컨테이너를 stop 한다
-                sh 'docker ps -f name=back-image -q \
-                | xargs --no-run-if-empty docker container stop'
-
-                // front-image의 이름을 가진 컨테이너를 삭제함
-                try {
-                    sh 'docker container ls -a -f name=front-image \
-                    | xargs -r docker container rm'
-                } catch (Exception e) {
-                    // 에러를 무시하고 계속 진행
-                    echo "Failed to remove Docker container: ${e.message}"
-                }
-
+                sh 'docker ps -f name=back-image -q | xargs --no-run-if-empty docker container stop'
+//                 sh 'docker stop back-image'
                 // back-image의 이름을 가진 컨테이너를 삭제함
                 try {
-                    sh 'docker container ls -a -f name=back-image \
-                    | xargs -r docker container rm'
+//                     sh 'docker container ls -a -f name=back-image | xargs -r docker container rm'
+                    sh 'docker rm back-image'
                 } catch (Exception e) {
                     // 에러를 무시하고 계속 진행
                     echo "Failed to remove Docker container: ${e.message}"
@@ -92,16 +90,15 @@ pipeline {
                 // docker image build 시 기존에 존재하던 이미지는
                 // dangling 상태가 되기 때문에 이미지를 일괄 삭제
                 try {
-                    sh 'docker images -f "dangling=true" -q \
-                    | xargs -r docker rmi'
+                    sh 'docker images -f "dangling=true" -q | xargs -r docker rmi'
                 } catch (Exception e) {
                     // 에러를 무시하고 계속 진행
                     echo "Failed to remove Docker container: ${e.message}"
                 }
 
                 // docker container 실행
-                sh 'docker run -d --name front-image -p 80:80 front-image'
-                sh 'docker run -d --name back-image -p 5000:5000 back-image'
+//                 sh 'docker run -d --name front-image -p 80:80 front-image'
+                sh 'docker run -d --name back-image -p 8080:8080 back-image'
                 }
             }
         }
