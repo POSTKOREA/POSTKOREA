@@ -8,6 +8,7 @@
     android:padding="16dp">
 
     <com.ssafy.travelcollector.customView.OverlapImages
+        android:id="@+id/theme_rv_item_images"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,6 +19,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
+        android:id="@+id/theme_rv_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="테마1"
@@ -31,7 +33,7 @@
         app:layout_constraintVertical_bias="0.521" />
 
     <View
-        android:id="@+id/heart_unclicked"
+        android:id="@+id/theme_rv_item_heart_unclicked"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@drawable/heart_unclicked"
@@ -43,7 +45,7 @@
         android:visibility="visible"/>
 
     <View
-        android:id="@+id/heart_clicked"
+        android:id="@+id/theme_rv_item_heart_clicked"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@drawable/heart"
