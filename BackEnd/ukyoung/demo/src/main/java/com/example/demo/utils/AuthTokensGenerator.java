@@ -28,6 +28,7 @@ public class AuthTokensGenerator {
     }
 
     public Long extractMemberId(String accessToken) {
-        return Long.valueOf(jwtTokenProvider.extractSubject(accessToken));
+        // 토큰 앞에 붙어있는 "Bearer " 제거
+        return Long.valueOf(jwtTokenProvider.extractSubject(accessToken.substring(7)));
     }
 }

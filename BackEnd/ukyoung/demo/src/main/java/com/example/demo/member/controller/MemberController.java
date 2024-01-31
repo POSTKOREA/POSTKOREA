@@ -9,6 +9,7 @@ import com.example.demo.member.service.MemberService;
 import com.example.demo.utils.AuthTokens;
 import com.example.demo.utils.AuthTokensGenerator;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -53,6 +54,8 @@ public class MemberController {
         Long userId = loginMember.getId();
         AuthTokens tokens = authTokensGenerator.generate(userId);
 
+
+
         Map<String, Object> response = new HashMap<>();
         response.put("code", 0);
         response.put("msg", "succeed");
@@ -67,6 +70,7 @@ public class MemberController {
     // 유저 정보 가져오기
     @GetMapping
     @Operation(summary = "회원정보 조회", description = "회원 정보 조회를 진행합니다. 인가 과정에서 Token이 사용됩니다.")
+    @SecurityRequirement(name = "Authorization")
     public ResponseEntity<?> getMemberDetails(
             @RequestHeader("Authorization") String token) {
 
@@ -82,6 +86,7 @@ public class MemberController {
     // 회원정보 수정
     @PutMapping("/edit")
     @Operation(summary = "회원정보 수정", description = "회원 정보 수정을 진행합니다. 인가 과정에서 Token이 사용됩니다.")
+    @SecurityRequirement(name = "Authorization")
     public ResponseEntity<?> editMemberInfo(
             @RequestHeader("Authorization") String token,
             @RequestBody MemberEditDto memberDto) {
@@ -100,6 +105,7 @@ public class MemberController {
     // 비밀번호 수정
     @PutMapping("/edit-password")
     @Operation(summary = "비밀번호 수정", description = "비밀번호 수정을 진행합니다. 인가 과정에서 Token이 사용되며, 기존 비밀번호 재인증이 진행됩니다.")
+    @SecurityRequirement(name = "Authorization")
     public ResponseEntity<?> editMemberPassword(
             @RequestHeader("Authorization") String token,
             @RequestBody MemberEditPwdDto pwdDto) {
@@ -117,6 +123,7 @@ public class MemberController {
 
     @DeleteMapping
     @Operation(summary = "회원탈퇴", description = "회원 정보 삭제를 진행합니다. 인가 과정에서 Token이 사용됩니다.")
+    @SecurityRequirement(name = "Authorization")
     public ResponseEntity<?> removeMember(
             @RequestHeader("Authorization") String token) {
         // 토큰을 통해 userId 추출 후 Member 객체 생성

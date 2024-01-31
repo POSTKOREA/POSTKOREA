@@ -4,6 +4,7 @@ import com.example.demo.member.service.MemberService;
 import com.example.demo.member.service.ProfileService;
 import com.example.demo.utils.AuthTokensGenerator;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -30,6 +31,7 @@ public class ProfileController {
     // 사용자
     @PostMapping(value = "/image", consumes = "multipart/form-data")
     @Operation(summary = "프로필 이미지 업로드", description = "사용자의 프로필 이미지를 업로드합니다. 인가 과정에서 Token이 사용됩니다.")
+    @SecurityRequirement(name = "Authorization")
     public ResponseEntity<?> uploadProfileImage(
             @RequestHeader("Authorization") String token,
             @RequestPart MultipartFile file) throws IOException {
@@ -48,6 +50,7 @@ public class ProfileController {
     // 지금은 토큰을 통해 조회가능하며 차후 토큰 -> userId -> 친구목록 조회 기능도 추가 예정
     @GetMapping(value = "/image", produces = "multipart/form-data")
     @Operation(summary = "프로필 이미지 조회", description = "사용자의 프로필 이미지를 조회합니다. 인가 과정에서 Token이 사용됩니다.")
+    @SecurityRequirement(name = "Authorization")
     public ResponseEntity<?> downloadProfileImage(
             @RequestHeader("Authorization") String token) throws MalformedURLException {
         Long userId = authTokensGenerator.extractMemberId(token);
