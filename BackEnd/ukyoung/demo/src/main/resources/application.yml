@@ -1,32 +1,20 @@
-#server:
-#  port: 443
-#  ssl:
-#    enabled: true
-#    key-store: classpath:ssl/certificate.p12
-#    key-store-password: "0125"
-#    key-store-type: PKCS12
 spring:
   datasource:
-#    url: jdbc:mariadb://i10d102.p.ssafy.io:3306/test
-#    username: root
-#    password: "0125"
-    # 개인용 데이터베이스 환경에 맞추어 셋업 필요
     url: jdbc:mariadb://localhost:3307/ssafydb
     username: root
     password: ssafy
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
 #    hibernate:
-#      ddl-auto: create
+#       ddl-auto: create
     properties:
       hibernate:
-        #show_sql: true
+        # show_sql: true
         format_sql: true
   mail:
     host: smtp.gmail.com
     port: 587
     username: ukyoung147@gmail.com
-    # password는 앱 비밀번호 값이며 기존 구글 비밀번호와는 다른 값임
     password: vfkcpxxqwlyrldll
     properties:
       mail:
@@ -42,7 +30,8 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
-#  org.hibernate.type: trace
+# org.hibernate.type: trace
+
 
 jwt:
   secret-key: a3f62325a07a3194531c43a4fb97e85d8c635959ff92bf833bd86a98a5c2cbe02a3f082a5058712221c8e7cac9ad5143ed3f6d3bce64ef052b2df2bd95a0132c
@@ -64,7 +53,7 @@ oauth:
       api: https://openapi.naver.com
 
 springdoc:
-  packages-to-scan: com.ssafy.dmobile
+  packages-to-scan: com.example.demo
   # consumes: request, produces: response
   default-consumes-media-type: application/json;charset=UTF-8
   default-produces-media-type: application/json;charset=UTF-8
