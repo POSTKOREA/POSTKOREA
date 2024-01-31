@@ -1,46 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SignUpFragment"
-    android:orientation="vertical"
-    android:background="@color/background"
-    android:gravity="center"
-    >
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="로고"
-        android:textSize="50sp"
-        android:gravity="center"
-        android:layout_margin="20dp"
-        />
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:background="@color/background"
+android:gravity="center"
+tools:context=".ChangeUserInfoFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="e-mail"
-        android:textSize="20sp"
-        android:layout_marginStart="20dp"
+        android:textSize="40sp"
+        android:gravity="start"
+        android:layout_marginHorizontal="20dp"
         />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <TextView
+        android:id="@+id/change_user_info_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginHorizontal="30dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        >
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/sign_up_et_e_mail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/user_info_form"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        android:textSize="40sp"
+        android:gravity="start"
+        android:layout_marginHorizontal="20dp"
+        tools:text="abc@gmail.com"
+        />
 
     <TextView
         android:layout_width="match_parent"
@@ -58,7 +43,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         >
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/sign_up_et_pw"
+            android:id="@+id/change_user_info_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/user_info_form"
@@ -82,7 +67,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         >
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/sign_up_et_pw2"
+            android:id="@+id/change_user_info_pw_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/user_info_form"
@@ -93,7 +78,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="이름"
+        android:text="닉네임"
         android:textSize="20sp"
         android:layout_marginStart="20dp"
         />
@@ -130,7 +115,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         >
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/sign_up_et_phone_number"
+            android:id="@+id/change_user_info_phone_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/user_info_form"
@@ -138,16 +123,25 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/sign_up_btn_sign_up"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/button_brown"
-        android:text="가입하기"
-        android:layout_marginTop="32dp"
-        android:paddingVertical="13dp"
-        android:paddingHorizontal="60dp"
-        />
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/change_user_info_btn_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/brown3"
+            android:text="완료"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="30dp"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="40dp"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>
