@@ -2,25 +2,51 @@ package com.ssafy.travelcollector.config
 
 import android.app.Application
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.util.Utility
 import com.navercorp.nid.NaverIdLoginSDK
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 
 private const val TAG = "ApplicationClass"
 class ApplicationClass : Application() {
+
+    lateinit var retrofit: Retrofit
+
+    val gson: Gson = GsonBuilder().setLenient().create()
+
+    val okHttpClient = OkHttpClient.Builder()
+        .readTimeout(5000, TimeUnit.MILLISECONDS)
+        .connectTimeout(5000, TimeUnit.MILLISECONDS)
+        .build()
+
+
     override fun onCreate() {
         super.onCreate()
 
         NaverIdLoginSDK.initialize(applicationContext, NAVER_CLIENT_ID, NAVER_CLIENT_SECRET, NAVER_CLIENT_NAME)
         KakaoSdk.init(applicationContext, KAKAO_APP_KEY)
+
+        retrofit = Retrofit.Builder()
+            .baseUrl(SERVER_URL)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(okHttpClient)
+            .build()
     }
+
     companion object{
         const val NAVER_CLIENT_ID = "ISnINdg5vxbmmrhbZ2rJ"
         const val NAVER_CLIENT_SECRET = "Zc1XDYhfgo"
         const val NAVER_CLIENT_NAME = "dMoblie"
-
         const val KAKAO_APP_KEY = "6bc61f45686049a50d5900bd5a6c330b"
+
+        const val SERVER_URL = "http://i10d102.p.ssafy.io:8080/hello/"
+
 
     }
 

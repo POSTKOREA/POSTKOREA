@@ -12,13 +12,26 @@ import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
+import com.ssafy.travelcollector.LoginFragment
 import com.ssafy.travelcollector.R
+import com.ssafy.travelcollector.dto.User
 import kotlin.math.log
 
 private const val TAG = "SNSAuth"
 object SNSAuth{
 
     val serviceTerms = listOf("service")
+
+    interface LoginCallback{
+        fun onAlreadySignIn(userInfo: User)
+        fun onSignUp(userInfo: User)
+    }
+
+    private lateinit var loginCallBack: LoginCallback
+
+    fun setLoginCallBack(loginCallback: LoginCallback){
+        this.loginCallBack = loginCallback
+    }
 
     fun disconnect(){
         UserApiClient.instance.unlink { error ->
@@ -46,14 +59,13 @@ object SNSAuth{
                         Log.e(TAG, "사용자 정보 요청 실패1", error)
                     }
                     else if (user != null) {
-                        Log.d(TAG, "startKakaoLogin: ${user.kakaoAccount?.email}")
-                        Log.d(TAG, "startKakaoLogin: ${user.properties?.get("nickname")}")
-                        Log.d(TAG, "startKakaoLogin: ${user.properties?.get("profile_image")}")
+                        loginCallBack.onSignUp(User(
+                            userEmail = user.kakaoAccount?.email!!,
+                            userNickname = user.properties?.get("nickname")!!,
+                        ))
                     }
                 }
 
-
-//                Navigation.findNavController(view).navigate(R.id.mainFragment)
             }
 
         }
@@ -79,7 +91,10 @@ object SNSAuth{
                 val userId = result.profile?.id
                 Log.d(TAG, "onSuccess: $result")
                 Log.d(TAG, "onSuccessId: $userId")
-                Navigation.findNavController(view).navigate(R.id.mainFragment)
+                loginCallBack.onSignUp(User(
+                    userEmail = result.profile?.email!!,
+                    userNickname = result.profile?.nickname!!,
+                ))
             }
         }
 
