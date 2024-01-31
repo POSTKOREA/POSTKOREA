@@ -11,6 +11,22 @@ spring:
       hibernate:
         # show_sql: true
         format_sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ukyoung147@gmail.com
+    password: vfkcpxxqwlyrldll
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+        debug: true
+        mime:
+          charset: UTF-8
+        transport:
+          protocol: smtp
 
 logging.level:
   org.hibernate.SQL: debug

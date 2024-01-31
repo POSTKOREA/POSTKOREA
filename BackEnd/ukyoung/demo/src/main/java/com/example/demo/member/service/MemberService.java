@@ -2,13 +2,9 @@ package com.example.demo.member.service;
 
 import com.example.demo.exception.CustomException;
 import com.example.demo.exception.ExceptionType;
-import com.example.demo.member.entity.dto.MemberDto;
-import com.example.demo.member.entity.dto.MemberEditDto;
+import com.example.demo.member.entity.request.*;
 import com.example.demo.member.entity.Member;
-import com.example.demo.member.entity.dto.MemberEditPwdDto;
-import com.example.demo.member.entity.dto.MemberLoginDto;
 import com.example.demo.member.repository.MemberRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +21,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     // 회원가입
     @Transactional
@@ -170,12 +168,61 @@ public class MemberService {
         memberRepository.deleteById(id);
     }
 
-//    public Long getUserIdByEmail(String email) {
-//        return memberRepository.findByEmail(email)
-//                .map(Member::getId)
-//                .orElseThrow(() -> new EntityNotFoundException("회원정보를 찾을 수 없습니다."));
-//    }
-//
+    public String generateTempoPassword(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder(length);
+
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(characters.length());
+            sb.append(characters.charAt(index));
+        }
+
+        return sb.toString();
+    }
+
+    @Transactional
+    public Member editMemberTempoPassword(MemberFindPwdDto pwdDto) {
+
+        Optional<Member> optionalMember = memberRepository.findByEmail(pwdDto.getUserEmail());
+        // 유저 정보가 없는 경우
+        if (optionalMember.isEmpty()) {
+            throw new CustomException(ExceptionType.MEMBER_NOT_FOUND_EXCEPTION);
+        }
+
+        Member member = optionalMember.get();
+
+        // 임시 비밀번호 생성
+        String tempoPassword = generateTempoPassword(8);
+
+        Member.MemberBuilder builder = member.toBuilder();
+
+        // Spring Security 를 통한 비밀번호 암호화
+        String password = passwordEncoder.encode(tempoPassword);
+        builder.password(password);
+
+        // 비밀번호 업데이트
+        Member savedMember = memberRepository.save(builder.build());
+
+        // 이메일 보내기
+        emailService.sendTemporaryPassword(savedMember.getEmail(), savedMember.getName(), tempoPassword);
+
+        return savedMember;
+    }
+
+    // Direct JPA Resources -----
+    public Long getUserIdByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .map(Member::getId)
+                .orElseThrow(() -> new CustomException(ExceptionType.MEMBER_NOT_FOUND_EXCEPTION));
+    }
+
+    public String getUserEmailById(Long id) {
+        return memberRepository.findById(id)
+                .map(Member::getEmail)
+                .orElseThrow(() -> new CustomException(ExceptionType.MEMBER_NOT_FOUND_EXCEPTION));
+    }
 //    public boolean existsById(Long id) {
 //        return memberRepository.existsById(id);
 //    }

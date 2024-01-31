@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.member.entity.dto.MemberDto;
+import com.example.demo.member.entity.request.MemberDto;
 import com.example.demo.oauth.service.OAuthInfo;
 import org.junit.jupiter.api.Test;
 
