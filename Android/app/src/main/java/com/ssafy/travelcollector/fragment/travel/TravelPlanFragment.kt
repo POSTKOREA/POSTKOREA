@@ -62,6 +62,10 @@ class TravelPlanFragment : BaseFragment<FragmentTravelPlanBinding>(FragmentTrave
             }
         }
 
+        binding.travelPlanBtnRecommendTheme.setOnClickListener {
+            findNavController().navigate(R.id.themeListFragment)
+        }
+
         binding.travelPlanFabAdd.setOnClickListener{
             mainActivityViewModel.addDetailState(DetailStateEnum.AddToTravel)
             findNavController().navigate(R.id.heritageListFragment)
