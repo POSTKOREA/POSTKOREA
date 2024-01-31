@@ -1,7 +1,9 @@
 package com.ssafy.dmobile.Board.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -10,8 +12,10 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Getter @Setter
+@Getter
+// Getter 로 getId, getTitle, getContent 자동으로 구현해준다.
 @Table(name = "Boards")
+@NoArgsConstructor  // 접근 제어자가 protected인 기본 생성자 별도 코드 없이 생성했다.
 public class Board {
 
     // 게시글 ID
@@ -35,7 +39,7 @@ public class Board {
     // post_image(이미지 업로드)
 
     // post_created(작성시간)
-    private LocalDateTime Board_created;
+    private LocalDateTime BoardCreated;
 
     // 태그
     @OneToMany(mappedBy = "board")
@@ -48,4 +52,17 @@ public class Board {
     // 댓글
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
     private List<Comment> comments;
+
+    // 빌더 패턴으로 객체 생성
+    @Builder
+    public Board(String title, String content, LocalDateTime Board_created) {
+        this.title = title;
+        this.content = content;
+        this.BoardCreated = BoardCreated;
+    }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

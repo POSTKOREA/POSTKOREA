@@ -1,15 +1,24 @@
 package com.ssafy.dmobile.Board.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "comment")
 public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
@@ -22,7 +31,7 @@ public class Comment {
 
     // board_id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id", nullable = false)
+    @JoinColumn(name = "Board_id", nullable = false)
     private Board board;
 
     // content
@@ -32,13 +41,8 @@ public class Comment {
     // createdTime
     private LocalDateTime createTime;
 
-    // 대댓글 부모
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private Comment parent;
 
-    // 대댓글 자식
-    @OneToMany(mappedBy = "parent")
-    private List<Comment> children = new ArrayList<>();
-
+    public void update(String content) {
+        this.content = content;
+    }
 }
