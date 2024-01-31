@@ -17,6 +17,8 @@ class MainFragment : BaseFragment<FragmentMainBinding> (FragmentMainBinding::bin
 
         mainActivity.setNavigationBarStatus(true)
 
+        initView()
+
         binding.mainPostRv.adapter = MainPostingAdapter().apply {
             submitList(listOf(Posting(), Posting(), Posting()))
             clickListener = object : MainPostingAdapter.IClickListener{
@@ -27,10 +29,13 @@ class MainFragment : BaseFragment<FragmentMainBinding> (FragmentMainBinding::bin
                 }
             }
         }
-
     }
 
-
+    private fun initView(){
+        binding.mainTvBtnBoardShowAll.setOnClickListener {
+            findNavController().navigate(R.id.heritagePostFragment)
+        }
+    }
 
 
 }
