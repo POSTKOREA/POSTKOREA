@@ -10,6 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.ssafy.travelcollector.config.BaseFragment
 import com.ssafy.travelcollector.databinding.FragmentSignUpBinding
+import com.ssafy.travelcollector.dto.User
+import com.ssafy.travelcollector.util.RetrofitUtil
 import com.ssafy.travelcollector.viewModel.MainActivityViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -34,10 +36,25 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
 
         binding.signUpBtnSignUp.setOnClickListener {
             //db에 회원 정보 저장
-
             if(isValidInformation()){
-                findNavController().navigate(R.id.loginFragment)
-                showToast("회원가입 성공")
+                lifecycleScope.launch {
+                    val msg = withContext(Dispatchers.IO){
+                        RetrofitUtil.USER_SERVICE.insert(
+                            User(
+                                userEmail = binding.signUpEtEMail.text.toString(),
+                                userPwd = binding.signUpEtPw.text.toString(),
+                                userNickname = binding.signUpEtName.text.toString()
+                            )
+                        ).body()?.get("msg").toString()
+                    }
+                    if(msg == "succeed"){
+                        findNavController().navigate(R.id.loginFragment)
+                        showToast("회원가입 성공")
+                    }else{
+                        showToast("실패ㅠㅠ")
+                    }
+                }
+
             }else{
                 showToast("정보가 잘못됨")
             }

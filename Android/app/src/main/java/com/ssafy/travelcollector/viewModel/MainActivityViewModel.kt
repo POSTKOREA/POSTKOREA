@@ -1,17 +1,19 @@
 package com.ssafy.travelcollector.viewModel
 
-import android.util.Log
-import androidx.collection.ArraySet
 import androidx.collection.arraySetOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ssafy.travelcollector.dto.Heritage
 import com.ssafy.travelcollector.dto.Posting
 import com.ssafy.travelcollector.dto.TravelTheme
 import com.ssafy.travelcollector.dto.User
-import com.ssafy.travelcollector.test.TDto
+import com.ssafy.travelcollector.util.RetrofitUtil
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 private const val TAG = "MainActivityViewModel"
 
@@ -22,6 +24,41 @@ enum class DetailStateEnum(private val state: Int) {
 }
 
 class MainActivityViewModel : ViewModel() {
+
+    private val _user = MutableStateFlow(User())
+    val user = _user.asStateFlow()
+
+    private val _accessToken = MutableStateFlow("")
+    val accessToken = _accessToken.asStateFlow()
+    var loginResponseCode: Int = 0
+
+    fun login(id: String, pwd: String){
+        viewModelScope.launch {
+            val response = withContext(Dispatchers.IO){
+                RetrofitUtil.USER_SERVICE.login(
+                    User(userEmail = id, userPwd = pwd)
+                )
+            }
+            loginResponseCode = response.code()
+            _accessToken.update {
+                response.body()?.get("access_token").toString()
+            }
+        }
+    }
+
+    fun getInfo(token: String){
+        viewModelScope.launch {
+            val response = withContext(Dispatchers.IO){
+                RetrofitUtil.USER_SERVICE.getUserInfo("Bearer $token")
+            }
+            _user.update {
+                it.copy(
+                    userEmail = response.body()?.get("user_email").toString(),
+                    userNickname = response.body()?.get("user_nickname").toString(),
+                )
+            }
+        }
+    }
 
     val detailState = arraySetOf(DetailStateEnum.None)
 

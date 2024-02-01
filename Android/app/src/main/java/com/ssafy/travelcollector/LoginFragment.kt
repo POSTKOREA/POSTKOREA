@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.ssafy.travelcollector.config.BaseFragment
 import com.ssafy.travelcollector.config.SNSAuth
 import com.ssafy.travelcollector.config.SNSAuth.disconnect
@@ -13,6 +14,7 @@ import com.ssafy.travelcollector.config.SNSAuth.startKakaoLogin
 import com.ssafy.travelcollector.config.SNSAuth.startNaverLogin
 import com.ssafy.travelcollector.databinding.FragmentLoginBinding
 import com.ssafy.travelcollector.dto.User
+import com.ssafy.travelcollector.util.RetrofitUtil
 import com.ssafy.travelcollector.viewModel.MainActivityViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -28,10 +30,32 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
 
         mainActivity.setNavigationBarStatus(false)
 
-        setLoginCallBack(view)
+        setLoginCallBack()
+
+        lifecycleScope.launch {
+            mainActivityViewModel.accessToken.collect{
+                if(it.isNotEmpty() && it!="null" && mainActivityViewModel.loginResponseCode == 200){
+                    lifecycleScope.launch {
+                        mainActivityViewModel.getInfo(it)
+                        findNavController().navigate(R.id.mainFragment)
+                    }
+                }else{
+                    if(mainActivityViewModel.loginResponseCode != 0){
+                        Log.d(TAG, "onViewCreated: ${mainActivityViewModel.loginResponseCode}")
+                        showToast("잘못됐습니다")
+                    }
+                }
+            }
+        }
 
         binding.loginBtnLogin.setOnClickListener{
-            Navigation.findNavController(view).navigate(R.id.mainFragment)
+            lifecycleScope.launch {
+                try{
+                    mainActivityViewModel.login(binding.loginEtId.text.toString(), binding.loginEtPw.text.toString())
+                }catch(e: Exception){
+                    Log.e(TAG, "onViewCreated: $e", )
+                }
+            }
         }
 
         binding.loginBtnNaverLogin.setOnClickListener{
@@ -45,9 +69,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
         binding.loginBtnFindId.setOnClickListener {
             disconnect()
         }
+
+        binding.loginBtnSignUp.setOnClickListener {
+            findNavController().navigate(R.id.signUpFragment)
+        }
     }
 
-    private fun setLoginCallBack(view: View){
+    private fun setLoginCallBack(){
 
         SNSAuth.setLoginCallBack(object : SNSAuth.LoginCallback{
             override fun onAlreadySignIn(userInfo: User) {
@@ -55,7 +83,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
 
             override fun onSignUp(userInfo: User) {
                 mainActivityViewModel.passUserInfoToSignUp(userInfo)
-                Navigation.findNavController(view).navigate(R.id.signUpFragment)
+                findNavController().navigate(R.id.signUpFragment)
             }
 
         })
