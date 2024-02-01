@@ -66,12 +66,12 @@ class TravelPlanFragment : BaseFragment<FragmentTravelPlanBinding>(FragmentTrave
         }
 
         binding.travelPlanBtnRecommendTheme.setOnClickListener {
-            mainActivityViewModel.addDetailState(DetailStateEnum.AddToTravel)
+            mainActivityViewModel.addDetailState(arrayListOf(DetailStateEnum.AddToTravel))
             findNavController().navigate(R.id.themeListFragment)
         }
 
         binding.travelPlanFabAdd.setOnClickListener{
-            mainActivityViewModel.addDetailState(DetailStateEnum.AddToTravel)
+            mainActivityViewModel.addDetailState(arrayListOf(DetailStateEnum.AddToTravel))
             findNavController().navigate(R.id.heritageListFragment)
         }
 
@@ -129,6 +129,11 @@ class TravelPlanFragment : BaseFragment<FragmentTravelPlanBinding>(FragmentTrave
                 val newList = mainActivityViewModel.travelPlanHeritageList.value.toMutableList()
                 Collections.swap(newList, from, to)
                 mainActivityViewModel.setTravelPlanHeritageList(newList as ArrayList)
+            }
+
+            override fun onClick(position: Int) {
+                mainActivityViewModel.setCurHeritage(mainActivityViewModel.curHeritageList.value[position])
+                findNavController().navigate(R.id.culturalAssetDetailFragment)
             }
         }
 
