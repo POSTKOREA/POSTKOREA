@@ -1,7 +1,7 @@
 package com.ssafy.dmobile.Board.service;
 
-import com.ssafy.dmobile.Board.Dto.request.BoardRequestDto;
-import com.ssafy.dmobile.Board.Dto.response.BoardResponseDto;
+import com.ssafy.dmobile.Board.Dto.request.BoardRequestDTO;
+import com.ssafy.dmobile.Board.Dto.response.BoardResponseDTO;
 import com.ssafy.dmobile.Board.entity.Board;
 import com.ssafy.dmobile.Board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,47 +23,47 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     @Transactional
-    public BoardResponseDto createBoard(BoardRequestDto dto) {
+    public BoardResponseDTO createBoard(BoardRequestDTO dto) {
         Board board = dto.dtoToEntity(dto);
         Board save = boardRepository.save(board);
-        return new BoardResponseDto(save);
+        return new BoardResponseDTO(save);
     }
 
     @Override
     @Transactional
-    public BoardResponseDto updateBoard(Long id, BoardRequestDto dto) {
+    public BoardResponseDTO updateBoard(Long id, BoardRequestDTO dto) {
         Board board = boardRepository.findById(id).orElseThrow(() -> new RuntimeException("Board not found"));
         board.update(dto.getTitle(), dto.getContent());
         Board save = boardRepository.save(board);
-        return new BoardResponseDto(save);
+        return new BoardResponseDTO(save);
     }
 
     @Override
     // 전체 조회 repository.findAll();
-    public List<BoardResponseDto> getAllBoards() {
+    public List<BoardResponseDTO> getAllBoards() {
         List<Board> list = boardRepository.findAll();
 //        list.sort((a, b) -> a.g);
-        List<BoardResponseDto> dtoList = new ArrayList<>();
-        list.stream().forEach(findAll -> dtoList.add(new BoardResponseDto(findAll)));
+        List<BoardResponseDTO> dtoList = new ArrayList<>();
+        list.stream().forEach(findAll -> dtoList.add(new BoardResponseDTO(findAll)));
         return dtoList;
     }
 
     @Override
-    public BoardResponseDto getBoard(Long id) {
+    public BoardResponseDTO getBoard(Long id) {
         Optional<Board> optionalboard = boardRepository.findById(id);
-        return optionalboard.map(BoardResponseDto::new).orElse(null);
+        return optionalboard.map(BoardResponseDTO::new).orElse(null);
     }
 
     @Override
     @Transactional
-    public BoardResponseDto deleteBoard(Long id) {
+    public BoardResponseDTO deleteBoard(Long id) {
         Optional<Board> optionalBoard = boardRepository.findById(id);
         if (optionalBoard.isEmpty()) {
             throw new RuntimeException("Board not found for deletion");
         } else {
             Board deleteBoard = optionalBoard.get();
             boardRepository.deleteById(id);
-            return new BoardResponseDto(deleteBoard);
+            return new BoardResponseDTO(deleteBoard);
         }
     }
 

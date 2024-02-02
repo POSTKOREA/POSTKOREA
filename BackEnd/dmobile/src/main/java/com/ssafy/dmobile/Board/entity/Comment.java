@@ -1,48 +1,60 @@
 package com.ssafy.dmobile.Board.entity;
 
+import com.ssafy.dmobile.member.entity.Member;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "comment")
+@Table(name = "comments")
 public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
-    private Long id;
-
-    // User
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id", nullable = false)
-//    private User user
-
-    // board_id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Board_id", nullable = false)
-    private Board board;
+    private Long commentId;
 
     // content
     @Column(nullable = false)
     private String content;
 
-    // createdTime
-    private LocalDateTime createTime;
+    // User
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
+    // board_id
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "boards_id")
+    private Board board;
+
+    // createdTime
+    private Long createdDate;
+
+    @Getter
+    private Long boardId;
+
+    @Builder
+    public Comment(Long commentId, Board board, String content, Member member) {
+        this.commentId = commentId;
+        this.board = board;
+        this.content = content;
+        this.member = member;
+    }
 
     public void update(String content) {
         this.content = content;
     }
+
 }

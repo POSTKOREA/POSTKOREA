@@ -23,4 +23,5 @@ public class MemberDto {
     private String userGender;
     @JsonProperty("user_auth")
     private OAuthInfo userAuth;
+
 }

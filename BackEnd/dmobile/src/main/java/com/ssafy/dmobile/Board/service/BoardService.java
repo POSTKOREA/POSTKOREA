@@ -1,21 +1,18 @@
 package com.ssafy.dmobile.Board.service;
 
-import com.ssafy.dmobile.Board.Dto.request.BoardRequestDto;
-import com.ssafy.dmobile.Board.Dto.response.BoardResponseDto;
-import com.ssafy.dmobile.Board.repository.BoardRepository;
+import com.ssafy.dmobile.Board.Dto.request.BoardRequestDTO;
+import com.ssafy.dmobile.Board.Dto.response.BoardResponseDTO;
 
 import java.util.List;
 
 public interface BoardService {
-    BoardResponseDto createBoard(BoardRequestDto dto);
+    BoardResponseDTO createBoard(BoardRequestDTO dto);
 
-    BoardResponseDto updateBoard(Long id, BoardRequestDto dto);
+    BoardResponseDTO updateBoard(Long id, BoardRequestDTO dto);
 
-    List<BoardResponseDto> getAllBoards();
+    List<BoardResponseDTO> getAllBoards();
 
-    BoardResponseDto getBoard(Long id);
+    BoardResponseDTO getBoard(Long id);
 
-    // delete 구현 못하겠음;;
-//    BoardResponseDto deleteBoard(Long id);
-    BoardResponseDto deleteBoard(Long id);
+    BoardResponseDTO deleteBoard(Long id);
 }

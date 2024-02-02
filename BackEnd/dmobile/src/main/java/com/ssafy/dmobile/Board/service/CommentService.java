@@ -1,20 +1,30 @@
 package com.ssafy.dmobile.Board.service;
 
-import com.ssafy.dmobile.Board.Dto.request.CommentRequestDto;
-import com.ssafy.dmobile.Board.Dto.response.CommentResponseDto;
+import com.ssafy.dmobile.Board.Dto.request.CommentRequestDTO;
+import com.ssafy.dmobile.Board.Dto.response.CommentResponseDTO;
+import com.ssafy.dmobile.Board.entity.Comment;
+import org.apache.catalina.User;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 public interface CommentService {
-    // 댓글 작성
-    CommentResponseDto createComment(CommentRequestDto commentRequestDto, Long boardId, String email);
+//    CommentResponseDTO createComment(Long boardId, CommentRequestDTO dto);
+//    CommentResponseDTO deleteComment(Long commentId);
+//    CommentResponseDTO updateComment(Long commentId, CommentRequestDTO dto);
 
-    // 댓글 조회
-    List<CommentResponseDto> commentList(Long id);
+    // 댓글 목록 확인
+//    CommentResponseDTO comments(Long boardid);
+    CommentResponseDTO createComment(CommentRequestDTO dto);
 
-    // 댓글 수정
-    void updateComment(CommentRequestDto commentRequestDto, Long commentId);
+    CommentResponseDTO deleteComment(Long commentId);
 
-    // 댓글 삭제
-    void deleteComment(Long commentId);
+    // 갱신
+    CommentResponseDTO updateComment(Long commentId, CommentRequestDTO dto);
+
+    // 전체 조회
+    List<CommentResponseDTO> getAllComments(Long boardId);
+
+    // 댓글 하나 조회
+    CommentResponseDTO getComment(Long id);
 }
