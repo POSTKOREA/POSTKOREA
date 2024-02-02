@@ -6,6 +6,8 @@ import com.ssafy.dmobile.Board.entity.Board;
 import com.ssafy.dmobile.Board.entity.Comment;
 import com.ssafy.dmobile.Board.repository.BoardRepository;
 import com.ssafy.dmobile.Board.repository.CommentRepository;
+import com.ssafy.dmobile.exception.CustomException;
+import com.ssafy.dmobile.exception.ExceptionType;
 import com.ssafy.dmobile.member.entity.Member;
 import com.ssafy.dmobile.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,39 +26,48 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     @Transactional
-    public CommentResponseDTO createComment(CommentRequestDTO dto) {
-        Board board = boardRepository.findById(dto.getBoardId())
-                .orElseThrow(() -> new RuntimeException("Board not found with id: " + dto.getBoardId()));
-//        Member member = memberRepository.findById(dto.getMemberId())
-//                .orElseThrow(() -> new RuntimeException("Member not found with id: " + dto.getMemberId()));
-        Comment comment = dto.dtoToEntity(dto);
-        comment.setBoard(board);
-        Comment saveComment = commentRepository.save(comment);
-//        comment.setMember(member);
+    public CommentResponseDTO createComment(CommentRequestDTO dto, Long memberId) {
+        // 게시판 존재 여부 확인
+        Board board = boardRepository.findById(dto.getBoardId()).orElseThrow(
+                () -> new CustomException(ExceptionType.BOARD_NOT_FOUND));
 
+        // 로그인된 사용자 존재 여부 확인
+        Member member = memberRepository.findById(memberId).orElseThrow(
+                () -> new CustomException(ExceptionType.MEMBER_NOT_FOUND_EXCEPTION));
+
+        // Comment 객체 생성 및 저장
+        Comment comment = dto.dtoToEntity(dto);
+        comment.setBoard(board);  // 게시물 설정
+        comment.setMember(member);  // 작성자 설정
+        Comment saveComment = commentRepository.save(comment);
         return new CommentResponseDTO(saveComment);
     }
 
     @Override
     @Transactional
-    public CommentResponseDTO deleteComment(Long commentId) {
-        Optional<Comment> optionalComment = commentRepository.findById(commentId);
-        if (optionalComment.isEmpty()) {
-            throw new RuntimeException("Board not found for deletion");
-        } else {
-            Comment deleteComment = optionalComment.get();
-            commentRepository.deleteById(commentId);
-            return new CommentResponseDTO(deleteComment);
+    public CommentResponseDTO deleteComment(Long commentId, Long memberId) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(
+                () -> new CustomException(ExceptionType.COMMENT_NOT_FOUND));
+        if (!comment.getMember().getId().equals(memberId)) {
+            throw new CustomException(ExceptionType.USER_NOT_AUTHORIZED_TO_UPDATE_THIS_BOARD);
         }
+        commentRepository.deleteById(commentId);
+        return new CommentResponseDTO(comment);
     }
+
 
     @Override
     @Transactional
-    public CommentResponseDTO updateComment(Long commentId, CommentRequestDTO dto) {
-        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new RuntimeException("Comment not found"));
+    public CommentResponseDTO updateComment(Long commentId, CommentRequestDTO dto, Long memberId) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(
+                () -> new CustomException(ExceptionType.COMMENT_NOT_FOUND));
+        if (!comment.getMember().getId().equals(memberId)) {
+            throw new CustomException(ExceptionType.MEMBER_NOT_FOUND_EXCEPTION);
+        }
         comment.update(dto.getContent());
         Comment save = commentRepository.save(comment);
         return new CommentResponseDTO(save);

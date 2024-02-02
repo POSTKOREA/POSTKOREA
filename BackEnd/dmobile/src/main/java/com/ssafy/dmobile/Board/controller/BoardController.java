@@ -41,16 +41,16 @@ public class BoardController {
                                                         @RequestBody BoardRequestDTO boardRequestDto,
                                                         @RequestHeader("Authorization") String token) {
         Long memberId = authTokensGenerator.extractMemberId(token);
-        BoardResponseDTO boardResponseDto = boardService.updateBoard(boardId, boardRequestDto, Long.valueOf(String.valueOf(memberId)));
+        BoardResponseDTO boardResponseDto = boardService.updateBoard(boardId, boardRequestDto, memberId);
         return new ResponseEntity<>(boardResponseDto, HttpStatus.OK);
     }
 
     // 게시글 전체 조회
-    @GetMapping
-    public ResponseEntity<List<BoardResponseDTO>> getAllBoards() {
-        List<BoardResponseDTO> dtoList = boardService.getAllBoards();
-        return new ResponseEntity<>(dtoList, HttpStatus.OK);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<BoardResponseDTO>> getAllBoards() {
+//        List<BoardResponseDTO> dtoList = boardService.getAllBoards();
+//        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+//    }
 
     // 게시글 단건 조회
     @GetMapping("/{boardId}")

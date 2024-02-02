@@ -7,6 +7,7 @@ import com.ssafy.dmobile.Board.entity.Board;
 import com.ssafy.dmobile.Board.entity.Comment;
 import com.ssafy.dmobile.Board.service.BoardService;
 import com.ssafy.dmobile.Board.service.CommentService;
+import com.ssafy.dmobile.utils.AuthTokensGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,27 +22,34 @@ public class CommentController {
 
     private final CommentService commentService;
     private final BoardService boardService;
+    private final AuthTokensGenerator authTokensGenerator;
 
     @PostMapping("/{boardId}/comments")
     public ResponseEntity<CommentResponseDTO> createComment(@PathVariable Long boardId,
-                                                                @RequestBody CommentRequestDTO commentRequestDTO) {
+                                                            @RequestBody CommentRequestDTO commentRequestDTO,
+                                                            @RequestHeader("Authorization") String token) {
+        Long memberId = authTokensGenerator.extractMemberId(token);
         commentRequestDTO.setBoardId(boardId);
-        CommentResponseDTO createdComment = commentService.createComment(commentRequestDTO);
-        return new ResponseEntity<>(createdComment, HttpStatus.OK);
+        CommentResponseDTO commentResponseDTO = commentService.createComment(commentRequestDTO, memberId);
+        return new ResponseEntity<>(commentResponseDTO, HttpStatus.OK);
     }
 
     @PutMapping("/{boardId}/{commentId}")
     public ResponseEntity<CommentResponseDTO> updateComment(@PathVariable Long commentId,
-                                                            @RequestBody CommentRequestDTO commentRequestDTO) {
-        CommentResponseDTO updatedComment = commentService.updateComment(commentId, commentRequestDTO);
-        return new ResponseEntity<>(updatedComment, HttpStatus.OK);
+                                                            @RequestBody CommentRequestDTO commentRequestDTO,
+                                                            @RequestHeader("Authorization") String token) {
+        Long memberId = authTokensGenerator.extractMemberId(token);
+        CommentResponseDTO commentResponseDTO = commentService.updateComment(commentId, commentRequestDTO, memberId);
+        return new ResponseEntity<>(commentResponseDTO, HttpStatus.OK);
     }
 
     // 개별 삭제
     @DeleteMapping("/{boardId}/{commentId}")
-    public ResponseEntity<CommentResponseDTO> deleteComment(@PathVariable long commentId) {
-        CommentResponseDTO deletedComment = commentService.deleteComment(commentId);
-        return new ResponseEntity<>(deletedComment, HttpStatus.OK);
+    public ResponseEntity<CommentResponseDTO> deleteComment(@PathVariable long commentId,
+                                                            @RequestHeader("Authorization") String token) {
+        Long memberId = authTokensGenerator.extractMemberId(token);
+        commentService.deleteComment(commentId, memberId);
+        return ResponseEntity.noContent().build();
     }
 
     // 단건 조회

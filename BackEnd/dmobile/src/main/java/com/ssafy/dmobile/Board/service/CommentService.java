@@ -9,18 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface CommentService {
-//    CommentResponseDTO createComment(Long boardId, CommentRequestDTO dto);
-//    CommentResponseDTO deleteComment(Long commentId);
-//    CommentResponseDTO updateComment(Long commentId, CommentRequestDTO dto);
 
-    // 댓글 목록 확인
-//    CommentResponseDTO comments(Long boardid);
-    CommentResponseDTO createComment(CommentRequestDTO dto);
+    CommentResponseDTO createComment(CommentRequestDTO dto, Long memberId);
 
-    CommentResponseDTO deleteComment(Long commentId);
+    CommentResponseDTO deleteComment(Long commentId, Long memberId);
 
     // 갱신
-    CommentResponseDTO updateComment(Long commentId, CommentRequestDTO dto);
+    CommentResponseDTO updateComment(Long commentId, CommentRequestDTO dto, Long memberId);
 
     // 전체 조회
     List<CommentResponseDTO> getAllComments(Long boardId);

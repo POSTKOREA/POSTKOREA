@@ -23,7 +23,7 @@ public class BoardResponseDTO {
     private String content;
     private Member member;  // 작성자
 //    private Long boardcreated = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-    private LocalDateTime boardcreated;
+    private Long createdate;
     private List<CommentResponseDTO> comments;
 
 
@@ -31,6 +31,7 @@ public class BoardResponseDTO {
         this.boardId = board.getBoardId();
         this.title = board.getTitle();
         this.content = board.getContent();
+        this.createdate = board.getCreatedDate();
 //        this.member = board.getMember();
 //        this.boardcreated = board.getBoardcreated();
         this.comments = board.getComments().stream().map(CommentResponseDTO::new).collect(Collectors.toList());
