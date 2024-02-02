@@ -15,6 +15,7 @@ import java.util.Set;
 
 @Entity
 @Getter
+@Setter
 // Getter 로 getId, getTitle, getContent 자동으로 구현해준다.
 @Table(name = "Boards")
 @NoArgsConstructor  // 접근 제어자가 protected인 기본 생성자 별도 코드 없이 생성했다.
@@ -34,16 +35,13 @@ public class Board {
     private String content;
 
     // User(유저 ID)
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "member_id")
-//    private Member member;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     // post_image(이미지 업로드)
 
-    // post_created(작성시간)
-//    @Column(name = "boardcreated")
-//    private Long boardcreated;
-//    private LocalDateTime boardcreated;
+    private Long createdDate;
 
     // 태그
     @OneToMany(mappedBy = "board")
@@ -56,12 +54,11 @@ public class Board {
 
     // 빌더 패턴으로 객체 생성
     @Builder
-    public Board(Long id, String title, String content, Member member, LocalDateTime boardcreated) {
+    public Board(Long id, String title, String content, Member member) {
         this.boardId = id;
         this.title = title;
         this.content = content;
-//        this.member = member;
-//        this.boardcreated = boardcreated;
+        this.member = member;
     }
 
     public void update(String title, String content) {

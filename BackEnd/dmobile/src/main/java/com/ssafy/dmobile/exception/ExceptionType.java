@@ -15,8 +15,15 @@ public enum ExceptionType {
     
     // 파일관리
     MAX_FILE_SIZE_EXCEPTION(401, "저장가능한 파일 용량을 초과하였습니다."),
-    FILE_NOT_FOUND_EXCEPTION(404, "해당하는 파일을 찾을 수 없습니다.")
+    FILE_NOT_FOUND_EXCEPTION(404, "해당하는 파일을 찾을 수 없습니다."),
+
+    // 게시판 관리
+    TITLE_CANNOT_BE_EMPTY(400, "제목을 입력하세요."),
+    CONTENT_CANNOT_BE_EMPTY(400, "내용을 입력하세요."),
+    BOARD_NOT_FOUND(404, "게시판을 찾을 수 없습니다."),
+    USER_NOT_AUTHORIZED_TO_UPDATE_THIS_BOARD(403, "게시판을 수정할 권한이 없습니다.")
     ;
+
 
     // 사용자 정의 enum 을 통해 exception 세분화
     private final int code;
