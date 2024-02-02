@@ -23,6 +23,7 @@ class TravelAdapter: BaseAdapter<TravelWithHeritageList>() {
             val endDate = SimpleDateFormat("yyyy.MM.dd", Locale.KOREAN).format(calendar.time).toString()
             binding.travelListRvItemTvDuration.text =
                 "$startDate ~ $endDate"
+            binding.travelListOiImg.setImages()
         }
     }
 
