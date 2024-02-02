@@ -51,6 +51,17 @@ class MainActivityViewModel : ViewModel() {
     private val _posting = MutableStateFlow(arrayListOf<Posting>())
     val posting = _posting.asStateFlow()
 
+    private val _userTravelId = MutableStateFlow(-1)
+    val userTravelId = _userTravelId.asStateFlow()
+    fun setUserTravelId(id: Int){
+        _userTravelId.update { id }
+    }
+
+    private val _userTravel = MutableStateFlow(TravelWithHeritageList())
+    val userTravel=_userTravel.asStateFlow()
+    fun setUserTravel(travel: TravelWithHeritageList){
+        _userTravel.update { travel }
+    }
 
     private val _userTravelList = MutableStateFlow(arrayListOf<TravelWithHeritageList>())
     val userTravelList = _userTravelList.asStateFlow()
@@ -65,7 +76,9 @@ class MainActivityViewModel : ViewModel() {
         }
     }
 
-
+    fun setUserTravelList(newList: ArrayList<TravelWithHeritageList>){
+        _userTravelList.update { newList }
+    }
 
     //계획 중인 여행 목록의 원본. 저장 시 해당 리스트로 저장.
     private val _travelPlanHeritageList = MutableStateFlow(arrayListOf(Heritage(name="3"), Heritage(name="4")))
