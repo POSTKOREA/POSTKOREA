@@ -26,6 +26,12 @@ enum class DetailStateEnum(private val state: Int) {
 
 class MainActivityViewModel : ViewModel() {
 
+    private val _curLocation = MutableStateFlow(Pair(0.0, 0.0))
+    val curLocation = _curLocation.asStateFlow()
+    fun setCurLocation(lat: Double, lng: Double){
+        _curLocation.update { Pair(lat, lng) }
+    }
+
     private val _detailState = MutableStateFlow(arraySetOf(DetailStateEnum.None))
     val detailState = _detailState.asStateFlow()
 
