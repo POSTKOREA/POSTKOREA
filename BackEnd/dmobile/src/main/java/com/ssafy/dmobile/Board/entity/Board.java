@@ -54,11 +54,12 @@ public class Board {
 
     // 빌더 패턴으로 객체 생성
     @Builder
-    public Board(Long id, String title, String content, Member member) {
+    public Board(Long id, String title, String content, Member member, Long createdDate) {
         this.boardId = id;
         this.title = title;
         this.content = content;
         this.member = member;
+        this.createdDate = createdDate;
     }
 
     public void update(String title, String content) {

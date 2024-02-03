@@ -6,6 +6,8 @@ import com.ssafy.dmobile.Board.Dto.response.CommentResponseDTO;
 import com.ssafy.dmobile.Board.entity.Board;
 import com.ssafy.dmobile.Board.service.BoardService;
 import com.ssafy.dmobile.utils.AuthTokensGenerator;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,12 +21,14 @@ import java.util.List;
 @RestController  // HTTP Response Body에 객체 데이터를 JSON 형식으로 반환하는 컨트롤러
 @RequestMapping("/boards")
 @RequiredArgsConstructor
+@Tag(name = "Board", description = "게시판 관련 API")
 public class BoardController {
 
     private final BoardService boardService;
     private final AuthTokensGenerator authTokensGenerator;
 
     // 게시판 작성
+    @Operation(summary = "게시판 등록", description = "특정 게시판을 등록합니다.")
     @PostMapping
     // requestbody로 요청 받은 본문 값 매핑
     public ResponseEntity<BoardResponseDTO> registerBoard(@RequestBody BoardRequestDTO boardRequestDto,
@@ -36,6 +40,7 @@ public class BoardController {
     }
 
     // 게시판 수정
+    @Operation(summary = "게시판 수정", description = "게시판을 수정합니다.")
     @PutMapping("/{boardId}")
     public ResponseEntity<BoardResponseDTO> updateBoard(@PathVariable Long boardId,
                                                         @RequestBody BoardRequestDTO boardRequestDto,
@@ -53,8 +58,9 @@ public class BoardController {
 //    }
 
     // 게시글 단건 조회
+    @Operation(summary = "게시판 조회", description = "게시판을 하나 조회합니다.")
     @GetMapping("/{boardId}")
-    public ResponseEntity<BoardResponseDTO> findBoard(@PathVariable Long boardId, Model model) {
+    public ResponseEntity<BoardResponseDTO> findBoard(@PathVariable Long boardId) {
         BoardResponseDTO dto = boardService.getBoard(boardId);
 //        List<CommentResponseDTO> comments = dto.getComments();
 //        if (comments != null && comments.isEmpty()) {
@@ -64,6 +70,7 @@ public class BoardController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+    @Operation(summary = "게시판 삭제", description = "게시판을 삭제합니다.")
     @DeleteMapping("/{boardId}")
     public ResponseEntity<BoardResponseDTO> deleteBoard(@PathVariable Long boardId,
                                                         @RequestHeader("Authorization") String token) {
@@ -77,6 +84,7 @@ public class BoardController {
     }
 
     // GET /boards?page=0&size=10&sort=id,desc
+    @Operation(summary = "게시판 페이징 출력", description = "페이징 기능을 추가한 게시판 조회 기능")
     @GetMapping
     public ResponseEntity<Page<Board>> getAllBoards(Pageable pageable) {
         Page<Board> boards = boardService.findAllBoards(pageable);

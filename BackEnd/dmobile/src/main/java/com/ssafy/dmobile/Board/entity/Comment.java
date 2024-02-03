@@ -1,6 +1,7 @@
 package com.ssafy.dmobile.Board.entity;
 
 import com.ssafy.dmobile.member.entity.Member;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
 @Table(name = "comments")
 public class Comment {
 

@@ -25,7 +25,7 @@ public class BoardRequestDTO {
         return Board.builder()
                 .title(dto.getTitle())
                 .content(dto.getContent())
-//                .createdDate(dto.getCreatedDate())
+                .createdDate(dto.getCreatedDate())
                 .build();
     }
 }
